@@ -24,6 +24,7 @@ dev = [
 
 [tool.ruff]
 line-length = 90
+extend-exclude = ["src/sucker_punch/views"]
 
 [tool.ruff.format]
 quote-style = "single"

@@ -37,7 +37,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="pushPointSale">
+        <widget class="QPushButton" name="push_poin_sale">
          <property name="maximumSize">
           <size>
            <width>180</width>
@@ -50,7 +50,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushConfiguration">
+        <widget class="QPushButton" name="push_configuration">
          <property name="maximumSize">
           <size>
            <width>180</width>

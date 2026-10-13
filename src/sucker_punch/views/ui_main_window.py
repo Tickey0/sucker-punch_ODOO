@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowCeizhg.ui'
+## Form generated from reading UI file 'main_windowRWbRYR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.12.0
 ##
@@ -70,17 +70,17 @@ class Ui_MainWindow(object):
         self.frameButton.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frameButton)
         self.verticalLayout_2.setObjectName('verticalLayout_2')
-        self.pushPointSale = QPushButton(self.frameButton)
-        self.pushPointSale.setObjectName('pushPointSale')
-        self.pushPointSale.setMaximumSize(QSize(180, 30))
+        self.push_poin_sale = QPushButton(self.frameButton)
+        self.push_poin_sale.setObjectName('push_poin_sale')
+        self.push_poin_sale.setMaximumSize(QSize(180, 30))
 
-        self.verticalLayout_2.addWidget(self.pushPointSale)
+        self.verticalLayout_2.addWidget(self.push_poin_sale)
 
-        self.pushConfiguration = QPushButton(self.frameButton)
-        self.pushConfiguration.setObjectName('pushConfiguration')
-        self.pushConfiguration.setMaximumSize(QSize(180, 30))
+        self.push_configuration = QPushButton(self.frameButton)
+        self.push_configuration.setObjectName('push_configuration')
+        self.push_configuration.setMaximumSize(QSize(180, 30))
 
-        self.verticalLayout_2.addWidget(self.pushConfiguration)
+        self.verticalLayout_2.addWidget(self.push_configuration)
 
         self.verticalLayout.addWidget(
             self.frameButton,
@@ -114,10 +114,10 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(
             QCoreApplication.translate('MainWindow', 'MainWindow', None)
         )
-        self.pushPointSale.setText(
+        self.push_poin_sale.setText(
             QCoreApplication.translate('MainWindow', 'Punto de Venta', None)
         )
-        self.pushConfiguration.setText(
+        self.push_configuration.setText(
             QCoreApplication.translate('MainWindow', 'Configuraci\u00f3n', None)
         )
 

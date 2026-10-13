@@ -1,12 +1,12 @@
-from PySide6.QtWidgets import QDialog, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QDialog, QMainWindow
 
-from sucker_punch.views.login import Login
+from sucker_punch.viewmodels.login import Login
 
-from .ui_main_window import Ui_MainWindow
+from ..views.ui_main_window import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
-    user = 'user'
+    username = 'user'
     password = 'secret'
 
     def __init__(self, parent=None):
@@ -20,6 +20,5 @@ class MainWindow(QMainWindow):
             login = Login(self)
             if login.exec() != QDialog.DialogCode.Accepted:
                 return False
-            if login.user == self.user and login.password == self.password:
+            if login.user.name == self.username and login.user.password == self.password:
                 return True
-

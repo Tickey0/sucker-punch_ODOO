@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'loginQCBlkF.ui'
+## Form generated from reading UI file 'loginiuFNjO.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.12.0
 ##
@@ -68,16 +68,16 @@ class Ui_Login(object):
         self.frameUser.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frameUser)
         self.verticalLayout_2.setObjectName('verticalLayout_2')
-        self.lblUser = QLabel(self.frameUser)
-        self.lblUser.setObjectName('lblUser')
-        self.lblUser.setMaximumSize(QSize(180, 60))
+        self.lbl_user = QLabel(self.frameUser)
+        self.lbl_user.setObjectName('lbl_user')
+        self.lbl_user.setMaximumSize(QSize(180, 60))
 
-        self.verticalLayout_2.addWidget(self.lblUser)
+        self.verticalLayout_2.addWidget(self.lbl_user)
 
-        self.txtUser = QLineEdit(self.frameUser)
-        self.txtUser.setObjectName('txtUser')
+        self.txt_user = QLineEdit(self.frameUser)
+        self.txt_user.setObjectName('txt_user')
 
-        self.verticalLayout_2.addWidget(self.txtUser)
+        self.verticalLayout_2.addWidget(self.txt_user)
 
         self.verticalLayout.addWidget(self.frameUser, 0, Qt.AlignmentFlag.AlignHCenter)
 
@@ -89,17 +89,17 @@ class Ui_Login(object):
         self.framePassword.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.framePassword)
         self.verticalLayout_3.setObjectName('verticalLayout_3')
-        self.lblPassword = QLabel(self.framePassword)
-        self.lblPassword.setObjectName('lblPassword')
-        self.lblPassword.setMaximumSize(QSize(180, 60))
+        self.lbl_password = QLabel(self.framePassword)
+        self.lbl_password.setObjectName('lbl_password')
+        self.lbl_password.setMaximumSize(QSize(180, 60))
 
-        self.verticalLayout_3.addWidget(self.lblPassword)
+        self.verticalLayout_3.addWidget(self.lbl_password)
 
-        self.txtPassword = QLineEdit(self.framePassword)
-        self.txtPassword.setObjectName('txtPassword')
-        self.txtPassword.setEchoMode(QLineEdit.EchoMode.Password)
+        self.txt_password = QLineEdit(self.framePassword)
+        self.txt_password.setObjectName('txt_password')
+        self.txt_password.setEchoMode(QLineEdit.EchoMode.Password)
 
-        self.verticalLayout_3.addWidget(self.txtPassword)
+        self.verticalLayout_3.addWidget(self.txt_password)
 
         self.verticalLayout.addWidget(
             self.framePassword, 0, Qt.AlignmentFlag.AlignHCenter
@@ -113,10 +113,10 @@ class Ui_Login(object):
         self.frameLogin.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_4 = QVBoxLayout(self.frameLogin)
         self.verticalLayout_4.setObjectName('verticalLayout_4')
-        self.pushLogin = QPushButton(self.frameLogin)
-        self.pushLogin.setObjectName('pushLogin')
+        self.push_login = QPushButton(self.frameLogin)
+        self.push_login.setObjectName('push_login')
 
-        self.verticalLayout_4.addWidget(self.pushLogin)
+        self.verticalLayout_4.addWidget(self.push_login)
 
         self.verticalLayout.addWidget(self.frameLogin, 0, Qt.AlignmentFlag.AlignHCenter)
 
@@ -128,10 +128,10 @@ class Ui_Login(object):
 
     def retranslateUi(self, Login):
         Login.setWindowTitle(QCoreApplication.translate('Login', 'Dialog', None))
-        self.lblUser.setText(QCoreApplication.translate('Login', 'Usuario', None))
-        self.lblPassword.setText(
+        self.lbl_user.setText(QCoreApplication.translate('Login', 'Usuario', None))
+        self.lbl_password.setText(
             QCoreApplication.translate('Login', 'Contrase\u00f1a', None)
         )
-        self.pushLogin.setText(QCoreApplication.translate('Login', 'Ingresar', None))
+        self.push_login.setText(QCoreApplication.translate('Login', 'Ingresar', None))
 
     # retranslateUi

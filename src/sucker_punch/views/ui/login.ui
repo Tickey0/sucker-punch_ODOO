@@ -36,7 +36,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="lblUser">
+       <widget class="QLabel" name="lbl_user">
         <property name="maximumSize">
          <size>
           <width>180</width>
@@ -49,7 +49,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="txtUser"/>
+       <widget class="QLineEdit" name="txt_user"/>
       </item>
      </layout>
     </widget>
@@ -76,7 +76,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QLabel" name="lblPassword">
+       <widget class="QLabel" name="lbl_password">
         <property name="maximumSize">
          <size>
           <width>180</width>
@@ -89,7 +89,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="txtPassword">
+       <widget class="QLineEdit" name="txt_password">
         <property name="echoMode">
          <enum>QLineEdit::EchoMode::Password</enum>
         </property>
@@ -120,7 +120,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <widget class="QPushButton" name="pushLogin">
+       <widget class="QPushButton" name="push_login">
         <property name="text">
          <string>Ingresar</string>
         </property>
