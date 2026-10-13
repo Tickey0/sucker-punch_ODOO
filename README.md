@@ -54,4 +54,38 @@ uv run sucker-punch
 ```
 uvx --from pyside6-essentials pyside6-designer
 ```
+## Structure Projects
+📁 nombre_proyecto
+│
+├── 📁 assets                 # Recursos estáticos
+│   ├── 📁 images             # Logos, íconos y gráficos (.png, .svg)
+│   └── 📁 styles             # Hojas de estilo de Qt (.qss)
+│
+├── 📁 src                    # Código fuente principal de la aplicación
+│   │
+│   ├── 📁 models             # Modelos de datos y entidades de negocio
+│   │   ├── __init__.py
+│   │   └── cliente_model.py
+│   │
+│   ├── 📁 viewmodels         # Lógica de presentación y enlace de datos
+│   │   ├── __init__.py
+│   │   ├── base_viewmodel.py # Clase base con mecanismos de propiedades/señales
+│   │   └── main_viewmodel.py
+│   │
+│   ├── 📁 views              # Interfaz de usuario (Componentes de PySide)
+│   │   ├── 📁 ui             # Opcional: Archivos .ui de Qt Designer
+│   │   │   └── main_window.ui
+│   │   ├── __init__.py
+│   │   └── main_view.py      # Clase de PySide (MainWindow) sin lógica de negocio
+│   │
+│   └── 📁 services           # Conectores y lógica externa (BD, APIs, Archivos)
+│       ├── __init__.py
+│       ├── database_service.py
+│       └── config_service.py
+│
+├── .gitignore                # Archivos a ignorar en Git (__pycache__, venv)
+├── config.py                 # Configuraciones globales de la app
+├── main.py                   # Punto de entrada (Inicializa QApplication y las capas)
+├── README.md                 # Documentación del proyecto
+└── requirements.txt          # Dependencias (pyside6, etc.)
 
