@@ -1,5 +1,8 @@
 # sucker-punch
-XML RPC Client for Point of Sale
+JSON-2 API Client for Point of Sale
+
+## Dependencies
+- https://docs.astral.sh/uv/
 
 ## Project created with uv
 ```
@@ -7,15 +10,11 @@ uv init
 ```
 ## Create python virtual environment
 ```
-virtualenv .venv
+uv venv
 ```
 or
 ```
-virtualenv -p python3.12 .venv
-```
-or
-```
-python3.12 -m venv .venv
+python3.14 -m venv .venv
 ```
 ## Activate python virtual environment
 ```
@@ -25,13 +24,16 @@ or
 ```
 . .venv/bin/activate
 ```
-
-## Update pip and tools
+or on powershell
 ```
-pip install -U pip
-pip install --upgrade wheel
-pip install --upgrade setuptools
+.venv\Scripts\Activate.ps1
 ```
+## Install dependencies
+```
+uv sync
+```
+## Utilities
+Util commands
 ### Add ruff
 ```
 uv add --dev ruff
@@ -47,5 +49,9 @@ ruff format
 ## Run
 ```
 uv run sucker-punch
+```
+## Designer
+```
+uvx --from pyside6-essentials pyside6-designer
 ```
 
