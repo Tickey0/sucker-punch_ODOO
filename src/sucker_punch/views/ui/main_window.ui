@@ -25,8 +25,8 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>180</width>
-        <height>90</height>
+        <width>320</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="frameShape">
@@ -40,9 +40,12 @@
         <widget class="QPushButton" name="push_poin_sale">
          <property name="maximumSize">
           <size>
-           <width>180</width>
-           <height>30</height>
+           <width>320</width>
+           <height>16777215</height>
           </size>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Punto de Venta</string>
@@ -53,9 +56,12 @@
         <widget class="QPushButton" name="push_configuration">
          <property name="maximumSize">
           <size>
-           <width>180</width>
-           <height>30</height>
+           <width>320</width>
+           <height>16777215</height>
           </size>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Configuración</string>
