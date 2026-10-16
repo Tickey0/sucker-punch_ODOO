@@ -84,8 +84,118 @@ uvx --from pyside6-essentials pyside6-designer
 │       └── config_service.py
 │
 ├── .gitignore                # Archivos a ignorar en Git (__pycache__, venv)
-├── config.py                 # Configuraciones globales de la app
+├── .env                # Configuraciones globales de la app
 ├── main.py                   # Punto de entrada (Inicializa QApplication y las capas)
 ├── README.md                 # Documentación del proyecto
 └── requirements.txt          # Dependencias (pyside6, etc.)
 
+
+## Run
+```
+uv run sucker-punch
+```
+La primera vez pide **Configuración**: dirección de Odoo (`http://127.0.0.1:8019`), base de
+datos, clave API (Odoo → Mis preferencias → Seguridad → Agregar clave API) y tamaño de letra.
+Al guardar se crea el archivo `.env` (está en `.gitignore`, nunca se sube a git).
+
+## Configuración (.env y variables de entorno)
+Cada dato se busca en este orden y se usa el primero que se encuentre:
+1. **Variable de entorno del sistema** (Windows o Linux).
+2. **Archivo `.env`**: junto al `.exe` cuando está compilado con PyInstaller, o en la raíz
+   del proyecto cuando se ejecuta con `uv run sucker-punch`.
+3. Valor por defecto (la clave API no tiene).
+
+| Variable | Dato | Por defecto |
+|---|---|---|
+| `ODOO_URL` | Dirección de Odoo | `http://127.0.0.1:8019` |
+| `ODOO_DB` | Base de datos | `odoo19_ec` |
+| `ODOO_API_KEY` | Clave API del usuario que vende (ej.: Caja) | — |
+| `FONT_SIZE` | Tamaño de letra (10 a 24) | `14` |
+
+Configuración muestra al lado de cada dato de dónde sale (**Sistema**, **.env** o
+**Por defecto**) y solo escribe en el `.env`. Lo que viene del sistema queda bloqueado: se
+cambia en las variables de entorno. Ejemplo en `.env.example`.
+
+## Teclado (Punto de Venta)
+| Tecla | Qué hace |
+|---|---|
+| Enter | Busca el código (o el nombre) y salta a una fila nueva |
+| `5.CODIGO` + Enter | Cantidad 5 (sirve con escáner: escribir `5.` y escanear) |
+| F9 | Maestro de Artículos (inventario) |
+| F2 | Cambiar el precio unitario de la línea (solo para esta factura). Enter cambia, Esc no |
+| ↑ ↓ | Cambiar de línea |
+| Shift+F6 | Borrar la línea; las de abajo suben |
+| Ctrl+F | Buscar una línea dentro de la factura |
+| Ctrl+L | Limpiar la factura (como recién abierta) |
+| Ctrl+Enter | Guardar: abre **Pago Efectivo** y luego **Cambio** |
+
+**Pago Efectivo**: Efectivo, Tarjeta, Depósito / Transferencia y Otros; se puede dividir.
+Enter: si ya alcanza pasa a Cambio; si falta, salta a la siguiente forma con lo que falta.
+El vuelto solo sale del efectivo. Esc vuelve a la factura.
+
+**Cambio**: Valor, Pagado y Cambio, y el cliente (arranca en Consumidor Final). Enter en
+Identificación lo busca en Odoo: si existe se llenan sus datos y el cursor va a Guardar; si
+no, se escriben y se crea al guardar. Más de $50 solo con cédula o RUC (regla del SRI).
+Esc vuelve a Pago Efectivo.
+
+En Odoo cada pago se registra en el diario que tenga su **forma de pago SRI**
+(Facturación → Configuración → Diarios): Efectivo `01`, Tarjeta `19`, Depósito y Otros `20`.
+Si ningún diario la tiene, se usa el de Efectivo o el de Banco.
+
+El usuario de la clave API (ej.: Caja) necesita en Odoo: Ventas, Inventario (validar la
+entrega), Facturación (confirmar la factura y registrar pagos) y crear contactos.
+
+## Views
+Las pantallas se editan en Qt Designer (`views/ui/*.ui`); en `views/` no hay lógica.
+Con `darkmode=0` Designer se ve claro, igual que la app (sin eso toma el modo oscuro de
+Windows):
+```
+uv run pyside6-designer -platform windows:darkmode=0
+```
+Las columnas de la tabla del Punto de Venta se editan en Designer (título, orden,
+alineación). Cada columna se reconoce por su nombre interno en la propiedad `whatsThis`:
+`number`, `code`, `uom`, `name`, `quantity`, `price`, `discount`, `subtotal`, `tax`, `ice`.
+
+Después de cambiar un `.ui`, regenerar su `ui_*.py` (no se editan a mano):
+```
+uv run pyside6-uic src/sucker_punch/views/ui/point_of_sale.ui -o src/sucker_punch/views/ui_point_of_sale.py
+uv run ruff format src/sucker_punch/views/ui_point_of_sale.py
+```
+
+## Build (ejecutable con PyInstaller)
+El ejecutable se arma en el mismo sistema donde se va a usar: el de Windows en Windows y
+el de Linux en Linux. `build/`, `dist/` y `*.spec` están en `.gitignore`.
+
+Una sola vez, en los dos sistemas (cerrar antes la app):
+```
+uv add --dev pyinstaller
+```
+
+### Windows
+Armar (sale `dist\sucker-punch.exe`):
+```
+uv run pyinstaller main.py --onefile --windowed --name sucker-punch --icon src/sucker_punch/assets/images/icon.ico --add-data "src/sucker_punch/assets;sucker_punch/assets" --paths src --noconfirm
+```
+Usar: copiar `sucker-punch.exe` a una carpeta normal (ej. `C:\SuckerPunch\`, no en
+`Program Files`) y abrirlo con doble clic. Configuración crea el `.env` al lado del `.exe`.
+Si Windows avisa «Windows protegió su PC»: Más información → Ejecutar de todas formas.
+
+### Linux (Ubuntu)
+Qt necesita esta librería para abrir ventanas (una sola vez):
+```
+sudo apt install libxcb-cursor0
+```
+Armar (sale `dist/sucker-punch`, sin `.exe`). Cambia el separador de `--add-data` (`:` en
+vez de `;`) y no lleva `--icon` (en Linux el ejecutable no tiene ícono; la ventana sí):
+```
+uv run pyinstaller main.py --onefile --windowed --name sucker-punch --add-data "src/sucker_punch/assets:sucker_punch/assets" --paths src --noconfirm
+```
+Usar: copiar `sucker-punch` a una carpeta (ej. `~/SuckerPunch/`) y abrirlo:
+```
+./sucker-punch
+```
+Configuración crea el `.env` al lado (en Linux es un archivo oculto: se ve con `ls -a`).
+Armarlo en la versión de Ubuntu más antigua donde se vaya a usar.
+
+En los dos sistemas la PC no necesita Python, y cada cambio en el código pide volver a
+armar el ejecutable.

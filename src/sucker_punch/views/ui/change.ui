@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Change</class>
+ <widget class="QDialog" name="Change">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>620</width>
+    <height>560</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Cambio</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog { background: white; }
+QFrame#frameAmounts, QFrame#frameCustomer { background: #fafafa; border: 1px solid #c8c8c8;
+                                            border-radius: 4px; }
+QLabel#lbl_value, QLabel#lbl_paid, QLabel#lbl_change { border: 1px solid #a0a0a0;
+                                                      color: black; padding: 2px 12px; }
+QLabel#lbl_value { background: #ffffb0; }
+QLabel#lbl_paid { background: #c8f5ff; }
+QLabel#lbl_change { background: #c8f5c8; font-weight: bold; }
+QLabel#lbl_change_title { font-weight: bold; }
+QLineEdit, QComboBox { background: white; color: black; padding: 2px 6px; }
+QLineEdit:focus, QComboBox:focus { background: #ffff80; }
+QLineEdit:read-only { background: #f0f0f0; color: #404040; }
+QPushButton#push_save, QPushButton#push_cancel { background: #f4f6fb; color: #000080;
+    border: 1px solid #000080; border-radius: 4px; padding: 8px 18px; font-weight: bold; }
+QPushButton#push_save:focus, QPushButton#push_cancel:focus { background: #e6ff8c; }
+QLabel#lbl_status[state=&quot;error&quot;] { color: #b00020; font-weight: bold; }
+QLabel#lbl_status[state=&quot;ok&quot;] { color: #006400; font-weight: bold; }
+QLabel#lbl_help { color: #707070; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frameAmounts">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_value_title">
+        <property name="text">
+         <string>Valor</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="lbl_value">
+        <property name="text">
+         <string>0.00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_paid_title">
+        <property name="text">
+         <string>Pagado</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="lbl_paid">
+        <property name="text">
+         <string>0.00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_change_title">
+        <property name="text">
+         <string>Cambio</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="lbl_change">
+        <property name="text">
+         <string>0.00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameButtons">
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="push_save">
+        <property name="text">
+         <string>💾  Guardar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="push_cancel">
+        <property name="text">
+         <string>✖  Cancelar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameCustomer">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,1">
+      <property name="verticalSpacing">
+       <number>8</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_identification">
+        <property name="text">
+         <string>Identificación</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="txt_identification">
+        <property name="maxLength">
+         <number>20</number>
+        </property>
+        <property name="placeholderText">
+         <string>Cédula, RUC o pasaporte + Enter</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_id_type">
+        <property name="text">
+         <string>Tipo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cmb_id_type"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_name">
+        <property name="text">
+         <string>Razón Social</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="txt_name"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lbl_email">
+        <property name="text">
+         <string>Email</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="txt_email"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbl_street">
+        <property name="text">
+         <string>Dirección</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txt_street"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lbl_status">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lbl_help">
+     <property name="text">
+      <string>Enter en Identificación: buscar el cliente    ↑ ↓: moverse    Esc: volver a Pago Efectivo</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>txt_identification</tabstop>
+  <tabstop>cmb_id_type</tabstop>
+  <tabstop>txt_name</tabstop>
+  <tabstop>txt_email</tabstop>
+  <tabstop>txt_street</tabstop>
+  <tabstop>push_save</tabstop>
+  <tabstop>push_cancel</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

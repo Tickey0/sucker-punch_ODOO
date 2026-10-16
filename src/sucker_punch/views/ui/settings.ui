@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Settings</class>
+ <widget class="QDialog" name="Settings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>680</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Configuración</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel#lbl_url_source, QLabel#lbl_database_source,
+QLabel#lbl_api_key_source, QLabel#lbl_font_size_source {
+	color: #666666;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="group_odoo">
+     <property name="title">
+      <string>Conexión a Odoo</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_url">
+        <property name="text">
+         <string>Dirección</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="txt_url">
+        <property name="placeholderText">
+         <string>http://127.0.0.1:8019</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lbl_url_source">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>De dónde se lee: Sistema (variable de entorno) o .env (archivo junto al programa)</string>
+        </property>
+        <property name="text">
+         <string>.env</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_database">
+        <property name="text">
+         <string>Base de datos</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="txt_database">
+        <property name="placeholderText">
+         <string>odoo19_ec</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="lbl_database_source">
+        <property name="toolTip">
+         <string>De dónde se lee: Sistema (variable de entorno) o .env (archivo junto al programa)</string>
+        </property>
+        <property name="text">
+         <string>.env</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_api_key">
+        <property name="text">
+         <string>Clave API</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="txt_api_key">
+        <property name="echoMode">
+         <enum>QLineEdit::EchoMode::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Odoo → Mis preferencias → Seguridad → Agregar clave API</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="lbl_api_key_source">
+        <property name="toolTip">
+         <string>De dónde se lee: Sistema (variable de entorno) o .env (archivo junto al programa)</string>
+        </property>
+        <property name="text">
+         <string>.env</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="group_display">
+     <property name="title">
+      <string>Pantalla</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,1,0">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_font_size">
+        <property name="text">
+         <string>Tamaño de letra</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="layout_font_size">
+        <item>
+         <widget class="QSpinBox" name="spin_font_size">
+          <property name="suffix">
+           <string> pt</string>
+          </property>
+          <property name="minimum">
+           <number>10</number>
+          </property>
+          <property name="maximum">
+           <number>24</number>
+          </property>
+          <property name="value">
+           <number>14</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacer_font_size">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lbl_font_size_source">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>De dónde se lee: Sistema (variable de entorno) o .env (archivo junto al programa)</string>
+        </property>
+        <property name="text">
+         <string>.env</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QLabel" name="lbl_preview">
+        <property name="text">
+         <string>Así se verá la letra: CHOCOLATE LISTO 220GR   $ 1.54</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lbl_status">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameButtons">
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="push_test">
+        <property name="text">
+         <string>Probar conexión</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="push_save">
+        <property name="text">
+         <string>Guardar</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="push_cancel">
+        <property name="text">
+         <string>Cancelar</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>txt_url</tabstop>
+  <tabstop>txt_database</tabstop>
+  <tabstop>txt_api_key</tabstop>
+  <tabstop>spin_font_size</tabstop>
+  <tabstop>push_save</tabstop>
+  <tabstop>push_cancel</tabstop>
+  <tabstop>push_test</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

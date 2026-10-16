@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowRWbRYR.ui'
+## Form generated from reading UI file 'main_window.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.12.0
 ##
@@ -65,20 +65,22 @@ class Ui_MainWindow(object):
         self.frameButton = QFrame(self.centralwidget)
         self.frameButton.setObjectName('frameButton')
         self.frameButton.setMinimumSize(QSize(180, 0))
-        self.frameButton.setMaximumSize(QSize(180, 90))
+        self.frameButton.setMaximumSize(QSize(320, 16777215))
         self.frameButton.setFrameShape(QFrame.Shape.StyledPanel)
         self.frameButton.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frameButton)
         self.verticalLayout_2.setObjectName('verticalLayout_2')
         self.push_poin_sale = QPushButton(self.frameButton)
         self.push_poin_sale.setObjectName('push_poin_sale')
-        self.push_poin_sale.setMaximumSize(QSize(180, 30))
+        self.push_poin_sale.setMaximumSize(QSize(320, 16777215))
+        self.push_poin_sale.setAutoDefault(True)
 
         self.verticalLayout_2.addWidget(self.push_poin_sale)
 
         self.push_configuration = QPushButton(self.frameButton)
         self.push_configuration.setObjectName('push_configuration')
-        self.push_configuration.setMaximumSize(QSize(180, 30))
+        self.push_configuration.setMaximumSize(QSize(320, 16777215))
+        self.push_configuration.setAutoDefault(True)
 
         self.verticalLayout_2.addWidget(self.push_configuration)
 
