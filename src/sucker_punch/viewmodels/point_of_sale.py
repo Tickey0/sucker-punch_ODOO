@@ -187,8 +187,11 @@ class PointOfSale(QMainWindow):
             self.go_to(self.row + (-1 if action == 'up' else 1))
 
     def search(self, text: str):
-        if not text:
-            self.go_to(self.row + 1 if self.row < self.invoice.blank_row else self.row)
+        on_line = self.row < self.invoice.blank_row
+        # Enter vacío, o con el mismo código de la línea: no se vuelve a buscar (si no,
+        # la línea se rehacía y perdía su cantidad y el precio de F2); solo baja una fila
+        if not text or (on_line and text == self.invoice.lines[self.row].product.code):
+            self.go_to(self.row + 1 if on_line else self.row)
             return
         quantity, term = split_quantity(text)
         try:
@@ -396,11 +399,16 @@ class PointOfSale(QMainWindow):
             return
 
         change_text = f'\nCambio: ${payment.change:.2f}' if payment.change else ''
+        customer_note = {
+            'created': '  (✔ cliente nuevo)',
+            'updated': '  (✔ cliente actualizado)',
+        }.get(change.action, '')
         QMessageBox.information(
             self,
-            'Factura guardada',
-            f'Factura {result.invoice} guardada.\n\n'
-            f'Cliente: {customer.name}\nTotal: ${result.total:.2f}{change_text}\n'
+            'Compra realizada',
+            f'✔ Compra realizada: factura {result.invoice}\n\n'
+            f'Cliente: {customer.name}{customer_note}\n'
+            f'Total: ${result.total:.2f}{change_text}\n'
             f'Estado: {result.payment_state}\nPedido: {result.order}',
         )
         self.reset_invoice()

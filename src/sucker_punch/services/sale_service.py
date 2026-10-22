@@ -135,11 +135,10 @@ class SaleService:
                     fields=['product_uom_qty'],
                 )
                 for move in moves:
-                    odoo.call(
+                    odoo.write(
                         'stock.move',
-                        'write',
-                        ids=[move['id']],
-                        vals={'quantity': move['product_uom_qty'], 'picked': True},
+                        [move['id']],
+                        {'quantity': move['product_uom_qty'], 'picked': True},
                     )
                 result = odoo.call(
                     'stock.picking',
@@ -180,11 +179,8 @@ class SaleService:
             sri_id = self._sri_payment_ids().get(SRI_CODES[main_method])
             if sri_id:
                 step = 'poner la forma de pago SRI en la factura'
-                odoo.call(
-                    'account.move',
-                    'write',
-                    ids=[invoice_id],
-                    vals={'l10n_ec_sri_payment_id': sri_id},
+                odoo.write(
+                    'account.move', [invoice_id], {'l10n_ec_sri_payment_id': sri_id}
                 )
 
             step = 'confirmar la factura'

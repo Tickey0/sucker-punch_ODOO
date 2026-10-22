@@ -135,8 +135,11 @@ El vuelto solo sale del efectivo. Esc vuelve a la factura.
 
 **Cambio**: Valor, Pagado y Cambio, y el cliente (arranca en Consumidor Final). Enter en
 Identificación lo busca en Odoo: si existe se llenan sus datos y el cursor va a Guardar; si
-no, se escriben y se crea al guardar. Más de $50 solo con cédula o RUC (regla del SRI).
-Esc vuelve a Pago Efectivo.
+no, se escriben y se crea al guardar. Razón Social, Email y Dirección se pueden corregir:
+al guardar se actualizan en Odoo (`res.partner` → `write`), solo lo que cambió. El
+Consumidor Final no se edita. Más de $50 solo con cédula o RUC (regla del SRI).
+Esc vuelve a Pago Efectivo. Al terminar sale «Compra realizada» (y si el cliente es nuevo
+o se actualizó).
 
 En Odoo cada pago se registra en el diario que tenga su **forma de pago SRI**
 (Facturación → Configuración → Diarios): Efectivo `01`, Tarjeta `19`, Depósito y Otros `20`.

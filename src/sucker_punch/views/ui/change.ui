@@ -26,6 +26,7 @@ QLabel#lbl_change_title { font-weight: bold; }
 QLineEdit, QComboBox { background: white; color: black; padding: 2px 6px; }
 QLineEdit:focus, QComboBox:focus { background: #ffff80; }
 QLineEdit:read-only { background: #f0f0f0; color: #404040; }
+QLineEdit { selection-background-color: #1d4ed8; selection-color: white; }
 QPushButton#push_save, QPushButton#push_cancel { background: #f4f6fb; color: #000080;
     border: 1px solid #000080; border-radius: 4px; padding: 8px 18px; font-weight: bold; }
 QPushButton#push_save:focus, QPushButton#push_cancel:focus { background: #e6ff8c; }

@@ -7,6 +7,7 @@ from ..models.payment import Payment
 from ..services.customer_service import (
     FINAL_CONSUMER_LIMIT,
     CustomerService,
+    check_contact,
     check_new_customer,
     guess_id_type,
     is_valid_cedula,
@@ -39,6 +40,7 @@ class ChangeDialog(QDialog):
         self.customers = customers
         self.limit_final_consumer = limit_final_consumer  # regla del SRI en Ecuador
         self.customer: Customer | None = None  # el último buscado (o el nuevo)
+        self.action = ''  # 'created' o 'updated' si al guardar se creó o corrigió
         ui = self.ui
         self.order = [
             ui.txt_identification,
@@ -108,9 +110,8 @@ class ChangeDialog(QDialog):
         ui.txt_name.setText(customer.name)
         ui.txt_email.setText(customer.email)
         ui.txt_street.setText(customer.street)
-        # Al que ya existe no se le cambia el nombre; al Consumidor Final, nada
-        ui.txt_name.setReadOnly(bool(customer.id))
-        for field in (ui.txt_email, ui.txt_street):
+        # Se pueden corregir y se actualizan en Odoo; el Consumidor Final no se toca
+        for field in (ui.txt_name, ui.txt_email, ui.txt_street):
             field.setReadOnly(customer.is_final_consumer)
 
     def lookup(self, move: bool = True) -> bool:
@@ -216,16 +217,24 @@ class ChangeDialog(QDialog):
             except OdooError as error:
                 self.show_message(f'Odoo no creó el cliente: {error}', 'error')
                 return
-        elif not customer.is_final_consumer and (customer.email, customer.street) != (
-            self.customer.email,
-            self.customer.street,
-        ):
+            self.action = 'created'
+        elif changes := {
+            field: getattr(customer, field)
+            for field in ('name', 'email', 'street')
+            if getattr(customer, field) != getattr(self.customer, field)
+        }:
+            field, message = check_contact(customer)
+            if message:
+                self.show_message(message, 'error')
+                getattr(ui, f'txt_{field}').setFocus()
+                return
             try:
                 with busy():
-                    self.customers.update_contact(customer)
+                    self.customers.update(customer, changes)
             except OdooError as error:
                 self.show_message(f'No se pudo actualizar el cliente: {error}', 'error')
                 return
+            self.action = 'updated'
         self.customer = customer
         self.accept()
 

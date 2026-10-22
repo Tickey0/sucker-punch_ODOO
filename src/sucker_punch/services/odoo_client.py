@@ -64,6 +64,20 @@ class OdooClient:
             message = response.text[:300]
         raise OdooError(f'{model}.{method}: {message}')
 
+    def write(self, model: str, ids: list[int], vals: dict):
+        """write: el Update del CRUD.
+
+        JSON-2 pasa los datos con el nombre que usa la última versión de write. Odoo lo
+        llama «vals», pero un módulo puede renombrarlo (l10n_ec_base usa «values» en
+        res.partner): si Odoo pide «values», se vuelve a mandar con ese nombre.
+        """
+        try:
+            return self.call(model, 'write', ids=ids, vals=vals)
+        except OdooError as error:
+            if "argument: 'values'" not in str(error):
+                raise
+            return self.call(model, 'write', ids=ids, values=vals)
+
     def login(self, user: str, password: str) -> Session:
         """Valida usuario y contraseña, y que la clave API sea de ese mismo usuario.
 

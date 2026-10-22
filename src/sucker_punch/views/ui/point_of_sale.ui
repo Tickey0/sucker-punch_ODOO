@@ -18,7 +18,8 @@
 QTableView { background: white; color: black; gridline-color: #dcdcdc; border: 1px solid #b0b0b0; }
 QTableView::item { padding: 0 4px; }
 QTableView::item:selected { background: #e6ff8c; color: black; }
-QTableView QLineEdit { background: #ffff80; color: black; border: none; }
+QTableView QLineEdit { background: #ffff80; color: black; border: none;
+                      selection-background-color: #1d4ed8; selection-color: white; }
 QHeaderView::section { background: #f4f6fb; color: #000080; font-weight: bold;
                        border: none; border-bottom: 2px solid #000080; padding: 6px 4px; }
 QLabel#lbl_help { color: #707070; }

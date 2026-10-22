@@ -56,6 +56,11 @@ def check_new_customer(customer: Customer) -> tuple[str, str]:
         return 'vat', 'El RUC debe tener 13 números.'
     if kind == 'passport' and len(vat) < 3:
         return 'vat', 'Escribe el número de pasaporte.'
+    return check_contact(customer)
+
+
+def check_contact(customer: Customer) -> tuple[str, str]:
+    """Revisa la Razón Social y el email (al crear o al actualizar el cliente)."""
     if not customer.name.strip():
         return 'name', 'Falta la Razón Social.'
     email = customer.email.strip()
@@ -149,14 +154,10 @@ class CustomerService:
         )[0]
         return customer.model_copy(update={'id': new_id})
 
-    def update_contact(self, customer: Customer):
-        """Cambia el email y la dirección de un cliente que ya existe."""
-        self.odoo.call(
+    def update(self, customer: Customer, changes: dict[str, str]):
+        """Guarda en Odoo los datos que se corrigieron (name, email o street)."""
+        self.odoo.write(
             'res.partner',
-            'write',
-            ids=[customer.id],
-            vals={
-                'email': customer.email.strip() or False,
-                'street': customer.street.strip() or False,
-            },
+            [customer.id],
+            {field: value.strip() or False for field, value in changes.items()},
         )
