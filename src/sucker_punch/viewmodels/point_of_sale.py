@@ -396,11 +396,16 @@ class PointOfSale(QMainWindow):
             return
 
         change_text = f'\nCambio: ${payment.change:.2f}' if payment.change else ''
+        customer_note = {
+            'created': '  (✔ cliente nuevo)',
+            'updated': '  (✔ cliente actualizado)',
+        }.get(change.action, '')
         QMessageBox.information(
             self,
-            'Factura guardada',
-            f'Factura {result.invoice} guardada.\n\n'
-            f'Cliente: {customer.name}\nTotal: ${result.total:.2f}{change_text}\n'
+            'Compra realizada',
+            f'✔ Compra realizada: factura {result.invoice}\n\n'
+            f'Cliente: {customer.name}{customer_note}\n'
+            f'Total: ${result.total:.2f}{change_text}\n'
             f'Estado: {result.payment_state}\nPedido: {result.order}',
         )
         self.reset_invoice()
