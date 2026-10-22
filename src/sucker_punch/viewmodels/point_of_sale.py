@@ -187,8 +187,11 @@ class PointOfSale(QMainWindow):
             self.go_to(self.row + (-1 if action == 'up' else 1))
 
     def search(self, text: str):
-        if not text:
-            self.go_to(self.row + 1 if self.row < self.invoice.blank_row else self.row)
+        on_line = self.row < self.invoice.blank_row
+        # Enter vacío, o con el mismo código de la línea: no se vuelve a buscar (si no,
+        # la línea se rehacía y perdía su cantidad y el precio de F2); solo baja una fila
+        if not text or (on_line and text == self.invoice.lines[self.row].product.code):
+            self.go_to(self.row + 1 if on_line else self.row)
             return
         quantity, term = split_quantity(text)
         try:
