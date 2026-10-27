@@ -21,6 +21,7 @@ from ..models.sale_line import SaleLine
 from ..models.session import Session
 from ..services.customer_service import CustomerService
 from ..services.odoo_client import OdooClient, OdooError
+from ..services.odoo_totals import compute_totals
 from ..services.product_service import ProductService
 from ..services.sale_service import SaleError, SaleService
 from ..views.ui_point_of_sale import Ui_PointOfSale
@@ -32,8 +33,9 @@ from .product_search import ProductSearch
 from .sale_lines_table import DEFAULT_WIDTH, WIDTHS, SaleLinesTable
 from .theme import busy
 
-# "5.CODIGO" -> cantidad 5, busca "CODIGO". Acepta decimales con coma: "1,5.18"
-QUANTITY_PREFIX = re.compile(r'^(\d+(?:,\d+)?)\.(.+)$')
+# "5.CODIGO" o "5*CODIGO" -> cantidad 5, busca "CODIGO". Decimales con coma o punto:
+# "1,5.CODIGO", "1.5.CODIGO", "1.5*CODIGO"
+QUANTITY_PREFIX = re.compile(r'^(\d+(?:[.,]\d+)?)[.*](.+)$')
 
 
 def now_text() -> str:
@@ -195,6 +197,10 @@ class PointOfSale(QMainWindow):
             self.go_to(self.row + 1 if on_line else self.row)
             return
         quantity, term = split_quantity(text)
+        if quantity <= 0:
+            QMessageBox.warning(self, 'Cantidad', 'La cantidad debe ser mayor que 0.')
+            self.go_to(self.row)
+            return
         try:
             exact = self.products.by_code(term)
             if len(exact) == 1:
@@ -229,6 +235,18 @@ class PointOfSale(QMainWindow):
             self.go_to(self.row)
 
     def put_line(self, product: Product, quantity: float):
+        if self.session.country_code == 'EC' and not product.tax_ids:
+            # Sin impuesto de venta el XML de la factura sale inválido y el SRI no la
+            # recibe («Element 'detalle': Missing child element(s)»)
+            QMessageBox.warning(
+                self,
+                'Producto sin IVA',
+                f'«{product.name}» no tiene impuesto de venta en Odoo y el SRI no '
+                'acepta la factura.\n\nEn Odoo ponle IVA 0 % o IVA 15 % en '
+                '«Impuestos de venta».',
+            )
+            self.go_to(self.row)
+            return
         line = SaleLine(product=product, quantity=quantity)
         if self.row < self.invoice.blank_row:
             self.invoice.replace_line(self.row, line)
@@ -312,19 +330,8 @@ class PointOfSale(QMainWindow):
 
     # ---- Totales y guardar ----
     def totals(self) -> dict:
-        rate_0 = rate_vat = vat = 0.0
-        for line in self.invoice.lines:
-            if line.product.tax_percent:
-                rate_vat += line.subtotal
-                vat += line.tax
-            else:
-                rate_0 += line.subtotal
-        return {
-            'rate_0': rate_0,
-            'rate_vat': rate_vat,
-            'vat': vat,
-            'total': rate_0 + rate_vat + vat,
-        }
+        """Con el mismo redondeo que Odoo: el total y el vuelto salen iguales."""
+        return compute_totals(self.invoice.lines, self.session.tax_rounding)
 
     def update_totals(self):
         totals = self.totals()
@@ -356,14 +363,18 @@ class PointOfSale(QMainWindow):
             label.setMinimumWidth(text + padding)
 
     def check_stock(self, lines: list[SaleLine]) -> bool:
-        """Avisa si se vende más de lo que hay en bodega (Odoo lo deja en negativo)."""
+        """Avisa si se vende más de lo que hay en bodega (Odoo lo deja en negativo).
+
+        Solo los productos con «Seguimiento de inventario»: los demás no llevan stock.
+        """
         requested = defaultdict(float)
         for line in lines:
             requested[line.product.id] += line.quantity
         missing = {
             line.product.name: (requested[line.product.id], line.product.stock)
             for line in lines
-            if requested[line.product.id] > line.product.stock
+            if line.product.is_storable
+            and requested[line.product.id] > line.product.stock
         }
         if not missing:
             return True
@@ -392,7 +403,7 @@ class PointOfSale(QMainWindow):
             self.go_to(self.row)
             return
 
-        total = round(self.totals()['total'], 2)
+        total = self.totals()['total']
         payment = Payment(total=total, cash=total)
         customer = None
         while True:
@@ -422,6 +433,14 @@ class PointOfSale(QMainWindow):
             return
 
         change_text = f'\nCambio: ${payment.change:.2f}' if payment.change else ''
+        if abs(result.total - payment.total) >= 0.005:
+            # No debería pasar (la pantalla calcula como Odoo), pero si pasa, que se vea
+            # el vuelto correcto: el pago en efectivo ya se registró por lo que dijo Odoo
+            right_change = max(0.0, payment.paid - result.total)
+            change_text = (
+                f'\n\n⚠ Odoo calculó ${result.total:.2f} y la pantalla '
+                f'${payment.total:.2f}.\nVuelto correcto: ${right_change:.2f}'
+            )
         customer_note = {
             'created': '  (✔ cliente nuevo)',
             'updated': '  (✔ cliente actualizado)',
