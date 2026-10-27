@@ -111,6 +111,7 @@ Cada dato se busca en este orden y se usa el primero que se encuentre:
 | `ODOO_DB` | Base de datos | `odoo19_ec` |
 | `ODOO_API_KEY` | Clave API del usuario que vende (ej.: Caja) | — |
 | `FONT_SIZE` | Tamaño de letra (10 a 24) | `14` |
+| `STOCK_WARNING` | Avisar al guardar si no hay stock: `1` sí, `0` no (se vende igual y en Odoo el stock queda en negativo) | `1` |
 
 Configuración muestra al lado de cada dato de dónde sale (**Sistema**, **.env** o
 **Por defecto**) y solo escribe en el `.env`. Lo que viene del sistema queda bloqueado: se

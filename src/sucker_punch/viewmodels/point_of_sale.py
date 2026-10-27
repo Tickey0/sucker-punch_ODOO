@@ -52,11 +52,18 @@ def split_quantity(text: str) -> tuple[float, str]:
 class PointOfSale(QMainWindow):
     closed = Signal()  # el menú vuelve a aparecer
 
-    def __init__(self, odoo: OdooClient, session: Session, parent=None):
+    def __init__(
+        self,
+        odoo: OdooClient,
+        session: Session,
+        parent=None,
+        stock_warning: bool = True,  # Configuración → Avisar cuando no hay stock
+    ):
         super().__init__(parent)
         self.ui = Ui_PointOfSale()
         self.ui.setupUi(self)
         self.session = session
+        self.stock_warning = stock_warning
         self.products = ProductService(odoo)
         self.sales = SaleService(odoo)
         self.customers = CustomerService(odoo)
@@ -399,7 +406,7 @@ class PointOfSale(QMainWindow):
             QMessageBox.information(self, 'Guardar', 'La factura no tiene productos.')
             self.go_to(self.row)
             return
-        if not self.check_stock(lines):
+        if self.stock_warning and not self.check_stock(lines):
             self.go_to(self.row)
             return
 
