@@ -125,6 +125,7 @@ class PointOfSale(QMainWindow):
         total_font.setPointSize(size * 2)
         total_font.setBold(True)
         self.ui.lbl_total.setFont(total_font)
+        self.fit_totals()
         rows = self.ui.table_lines.verticalHeader()
         rows.setDefaultSectionSize(int(self.fontMetrics().height() * 1.8))
         self.adjust_columns()
@@ -331,6 +332,28 @@ class PointOfSale(QMainWindow):
         self.ui.lbl_tiva_value.setText(f'{totals["rate_vat"]:.2f}')
         self.ui.lbl_iva_value.setText(f'{totals["vat"]:.2f}')
         self.ui.lbl_total.setText(f'{totals["total"]:.2f}')
+        self.fit_totals()
+
+    def fit_totals(self):
+        """Que cada total se vea completo con cualquier letra y ancho de ventana.
+
+        El mínimo es el ancho de «0000.00» (así no saltan al cambiar el valor) o el del
+        número actual si es más largo. Con un ancho fijo, una ventana angosta los
+        aplastaba y se cortaba el primer dígito (14.00 se veía 4.00).
+        """
+        ui = self.ui
+        for label in (
+            ui.lbl_t0_value,
+            ui.lbl_tiva_value,
+            ui.lbl_iva_value,
+            ui.lbl_discount_value,
+            ui.lbl_ice_value,
+            ui.lbl_total,
+        ):
+            metrics = label.fontMetrics()
+            text = max(metrics.horizontalAdvance(t) for t in ('0000.00', label.text()))
+            padding = label.width() - label.contentsRect().width()  # relleno y borde
+            label.setMinimumWidth(text + padding)
 
     def check_stock(self, lines: list[SaleLine]) -> bool:
         """Avisa si se vende más de lo que hay en bodega (Odoo lo deja en negativo)."""
