@@ -71,7 +71,7 @@ class PointOfSale(QMainWindow):
         self.session = session
         self.stock_warning = stock_warning
         self.products = ProductService(odoo)
-        self.sales = SaleService(odoo)
+        self.sales = SaleService(odoo, session.allowed_journal_ids)
         self.customers = CustomerService(odoo)
         self.row = 0  # fila del cursor (invoice.blank_row = fila en blanco del final)
 
